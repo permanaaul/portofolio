@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import Typed from 'typed.js';
 import heroImage from '../../public/images/profile/aul.jpg';
 import profilePic from '../../public/images/profile/aulll.jpg';
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaPhp, FaBootstrap, FaLaravel, FaGithub, FaDatabase, FaMapMarkerAlt, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
@@ -11,13 +9,9 @@ import { SiTypescript, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
 import { motion } from 'framer-motion';
-
-
-const DynamicTyped = dynamic(() => import('react-typed'), { ssr: false });
+import Typed from 'typed.js';  // Importing typed.js
 
 export default function Home() {
-  const typedElement = useRef<HTMLSpanElement>(null);
-
   // State to handle form inputs
   const [formData, setFormData] = useState({
     name: '',
@@ -26,12 +20,15 @@ export default function Home() {
     message: ''
   });
 
+  // Ref for the typing animation
+  const typedRef = useRef(null);
+
   // Function to handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/send-email', { // Adjust port if needed
+      const response = await fetch('http://localhost:3001/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,68 +49,63 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const typed = new Typed(typedElement.current, {
-      strings: ['Full Stack Web Development', 'Freelancer'],
+    // Initialize AOS
+    AOS.init({ duration: 1000 });
+
+    // Initialize Typed.js
+    const typed = new Typed(typedRef.current, {
+      strings: ['Full Stack Web Development', 'Freelancer'], // Strings to display
       typeSpeed: 40,
       backSpeed: 50,
       loop: true,
     });
 
+    // Destroy Typed instance on component unmount
     return () => {
       typed.destroy();
     };
   }, []);
 
-  useEffect(() => {
-    AOS.init({ duration: 1000 });
-  }, []);
-
-
-
   return (
     <>
-      {/* Bagian Hero */}
-      <section id="hero" className="relative h-screen w-full overflow-hidden"> {/* Changed min-h-screen to h-screen */}
-  <div className="absolute inset-0">
-    <Image
-      src={heroImage}
-      alt="Hero Background"
-      fill
-      style={{ objectFit: 'cover', objectPosition: 'center 75%' }}
-      quality={100}
-      className="z-0"
-    />
-  </div>
+      {/* Hero Section */}
+      <section id="hero" className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={heroImage}
+            alt="Hero Background"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center 75%' }}
+            quality={100}
+            className="z-0"
+          />
+        </div>
 
-  <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8 }}
-    className="relative z-10 flex items-center justify-center h-full text-center text-white"
-  >
-    <div className="container mx-auto p-8">
-      <h2 className="text-5xl font-bold">Aulia Permana</h2>
-      <p className="text-2xl mt-4">
-        I'm <span ref={typedElement}></span>
-      </p>
-    </div>
-  </motion.div>
-</section>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 flex items-center justify-center h-full text-center text-white"
+        >
+          <div className="container mx-auto p-8">
+            <h2 className="text-5xl font-bold">Aulia Permana</h2>
+            <p className="text-2xl mt-4">
+              I&apos;m <span ref={typedRef}></span>
+            </p>
+          </div>
+        </motion.div>
+      </section>
 
-      {/* Bagian About */}
+      {/* About Section */}
       <section id="about" data-aos="fade-up" className="min-h-screen w-full bg-gray-100 flex items-center justify-center">
         <div className="w-full max-w-6xl p-8">
-          {/* Judul Section */}
           <h2 className="text-4xl font-bold mb-8 border-b-4 border-blue-500 inline-block">About</h2>
 
-          {/* Deskripsi Singkat */}
           <p className="text-lg mb-8">
             I am a BICT Hons graduate from Management Science University, and I enhanced my skills at Purwadhika Digital Technology School’s Full Stack Web Development program. While there, I developed projects such as a company profile website and an invoice management app using Next.js and TypeScript. I successfully delivered these projects, focusing on user experience and scalability. I’m eager to apply my technical expertise and problem-solving skills to contribute to your team’s success.
           </p>
 
-          {/* Konten Profil dan Gambar */}
           <div className="flex flex-col md:flex-row items-center">
-            {/* Gambar */}
             <div className="flex-shrink-0 mb-8 md:mb-0 md:mr-8 w-64 h-64">
               <Image
                 src={profilePic}
@@ -124,11 +116,9 @@ export default function Home() {
               />
             </div>
 
-            {/* Deskripsi dan Detail */}
             <div className="flex-grow">
               <h3 className="text-2xl font-semibold mb-4">Full Stack Web Development</h3>
 
-              {/* Detail Profil */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-lg">
                 <p><strong>Birthday:</strong> <span className="ml-2">7 May 1999</span></p>
                 <p><strong>Age:</strong> <span className="ml-2">25</span></p>
