@@ -292,7 +292,7 @@ export default function Home() {
                   transition={{ delay: index * 0.3 }} // Adds staggered effect
                 >
                   <Image
-                    src={`/images/project/invoice${num}.jpg`} // Pastikan format gambar sesuai
+                    src={`/images/project/loket${num}.jpg`} // Pastikan format gambar sesuai
                     alt={`Invoice Management App ${num}`}
                     width={500}
                     height={300}
@@ -325,7 +325,7 @@ export default function Home() {
                   transition={{ delay: index * 0.2 }} // Adds staggered effect
                 >
                   <Image
-                    src={`/images/project/invoice${num}.jpg`} // Pastikan format gambar sesuai
+                    src={`/images/project/company${num}.jpg`} // Pastikan format gambar sesuai
                     alt={`Invoice Management App ${num}`}
                     width={500}
                     height={300}
