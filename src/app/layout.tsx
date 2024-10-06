@@ -1,7 +1,7 @@
 // layout.tsx
 import type { Metadata } from "next";
 import "./globals.css"; 
-import Sidebar from "../components/Sidebar"; 
+import SidebarWrapper from "../components/SidebarWrapper"; // Mengimpor SidebarWrapper
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Sidebar /> 
+        <SidebarWrapper /> {/* Gunakan SidebarWrapper, bukan Sidebar langsung */}
         <div className="ml-64 flex min-h-screen"> 
           <main className="min-h-screen"> 
             {children}
